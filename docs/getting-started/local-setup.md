@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
         /* Sleep before requesting the next expansion. Consecutive expands that
            arrive too quickly can cause overlapping MPI spawn operations to
            interfere with each other, leading to a launch failure. */
-        sleep(2);
+        sleep(1);
         DMR_AUTO(dmr_check(SHOULD_EXPAND), save(), (void)NULL, cleanup());
     }
 
@@ -95,12 +95,7 @@ DMR must run inside a **Slurm job allocation** via the `dmr` wrapper. Create a s
 #SBATCH --exclusive
 #SBATCH -N 1
 
-export SLURM_ROOT="${SLURM_ROOT:-/usr}"
-export PATH=$SLURM_ROOT/bin:$PATH
-export LD_LIBRARY_PATH=$DMR_PATH/build/lib:$LD_LIBRARY_PATH
-
 export DMR_PROCS_PER_NODE=1
-export DMR_DEFAULT_POLICY_MAX=4
 
 NODELIST_WITH_COUNTS=$(scontrol show hostnames "$SLURM_JOB_NODELIST" \
   | awk -v n="$DMR_PROCS_PER_NODE" '{print $1 ":" n}' \
