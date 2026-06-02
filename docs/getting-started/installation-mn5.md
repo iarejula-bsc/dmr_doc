@@ -29,7 +29,7 @@ cmake --build build -j112
 cmake --install build
 ```
 
-Set additional options as needed, see [Configuration: CMake options](../user-guide/configuration#cmake-options) for the full list:
+Set additional options as needed, see [Configuration: CMake options](../user-guide/configuration) for the full list:
 
 ```bash
 cmake -B build \
