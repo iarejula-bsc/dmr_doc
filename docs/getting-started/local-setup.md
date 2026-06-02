@@ -7,9 +7,27 @@ The fastest way to try DMR locally is with **MiniDMR**, a CLI that spins up a Do
 
 ## 1. Install MiniDMR
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs groupId="os">
+  <TabItem value="linux" label="Linux / macOS">
+
 ```bash
 curl -fsSL https://gitlab.bsc.es/accelcom/releases/dmr/tools/minidmr/-/raw/master/scripts/install.sh | bash
 ```
+
+  </TabItem>
+  <TabItem value="windows" label="Windows (PowerShell)">
+
+```powershell
+irm https://gitlab.bsc.es/accelcom/releases/dmr/tools/minidmr/-/raw/master/scripts/install.ps1 | iex
+```
+
+The script adds the install directory to the user `PATH` automatically.
+
+  </TabItem>
+</Tabs>
 
 ## 2. Start a cluster
 
