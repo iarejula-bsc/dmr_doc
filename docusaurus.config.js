@@ -8,17 +8,17 @@ const config = {
   favicon: 'img/favicon.ico',
 
   future: { v4: true },
+  markdown: {
+    mermaid: true,
+    hooks: { onBrokenMarkdownLinks: 'warn' },
+  },
+  themes: ['@docusaurus/theme-mermaid'],
 
   url: 'https://iarejula-bsc.github.io',
   baseUrl: process.env.BASE_URL ?? '/dmr_doc/',
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
-  markdown: {
-    hooks: {
-      onBrokenMarkdownLinks: 'warn',
-    },
-  },
 
   i18n: {
     defaultLocale: 'en',
@@ -100,6 +100,9 @@ const config = {
       footer: {
         style: 'dark',
         copyright: `Copyright © ${new Date().getFullYear()} Barcelona Supercomputing Center. Built with Docusaurus.`,
+      },
+      mermaid: {
+        theme: { light: 'neutral', dark: 'dark' },
       },
       prism: {
         theme: prismThemes.github,

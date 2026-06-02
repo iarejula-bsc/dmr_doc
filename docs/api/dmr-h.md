@@ -111,7 +111,7 @@ Perform the reconfiguration. Call only when `dmr_check` returns `DMR_RECONF`. Ha
 DMRAction dmr_finalize(void);
 ```
 
-Shut down DMR. Call before `MPI_Finalize`. **Collective.**
+Shut down DMR. Call before `MPI_Finalize`. Not collective; once a rank calls it, no further DMR calls can be made from that rank.
 
 ## Policy setters (collective)
 
