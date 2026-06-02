@@ -38,8 +38,8 @@ cmake -B build \
   -DDMR_USE_TALP=1
 ```
 
-:::note[TODO]
-Document Slurm4DMR build with custom Slurm on MareNostrum 5.
+:::info[Not yet documented]
+Instructions for building Slurm4DMR with a custom Slurm on MareNostrum 5 are not yet available in this documentation. For help, contact us at [accelcom@bsc.es](mailto:accelcom@bsc.es).
 :::
 
 ## Building the dependencies manually (advanced)
