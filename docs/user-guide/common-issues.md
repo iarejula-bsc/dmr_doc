@@ -25,11 +25,11 @@ DMR_AUTO(dmr_check(SHOULD_EXPAND), save(), (void)NULL, cleanup());
 DMR Error: Could not detect DMR state. Did you launch with the DMR wrapper?
 ```
 
-**Cause:** the application was launched with `mpirun` directly instead of through `dmr_wrapper`.
+**Cause:** the application was launched with `mpirun` directly instead of through `dmr`.
 
 **Fix:** always launch with the wrapper:
 ```bash
-$DMR_PATH/bin/dmr_wrapper mpirun --host $NODELIST_WITH_COUNTS ./my_app
+dmr mpirun --host $NODELIST_WITH_COUNTS ./my_app
 ```
 
 ---

@@ -101,7 +101,7 @@ NODELIST_WITH_COUNTS=$(scontrol show hostnames "$SLURM_JOB_NODELIST" \
   | awk -v n="$DMR_PROCS_PER_NODE" '{print $1 ":" n}' \
   | paste -sd,)
 
-$DMR_PATH/bin/dmr_wrapper mpirun --host $NODELIST_WITH_COUNTS ./hello_dmr
+dmr mpirun --host $NODELIST_WITH_COUNTS ./hello_dmr
 ```
 
 Submit and watch the output:
