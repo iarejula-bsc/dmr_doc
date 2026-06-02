@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 ## 3. Set a policy
 
 ```c
-    dmr_set_policy(dmr_policy_round());  // collective — all ranks must call
+    dmr_set_policy(dmr_policy_round());  // collective, all ranks must call
 ```
 
 ## 4. Add dmr_check to your main loop
@@ -85,5 +85,5 @@ DMR_DEFAULT_POLICY_MIN=1 DMR_DEFAULT_POLICY_MAX=8 dmr mpirun -n 2 ./my_app
 ```
 
 :::caution
-Always launch with `dmr mpirun` — calling `mpirun` directly causes `Did you launch with the DMR wrapper?` errors.
+Always launch with `dmr mpirun` ; calling `mpirun` directly causes `Did you launch with the DMR wrapper?` errors.
 :::

@@ -5,7 +5,7 @@ title: Reconfiguration Callbacks
 
 `DMR_AUTO` accepts three callbacks. Which one is invoked depends on what DMR needs your application to do at each reconfiguration step.
 
-## redist_func — save or redistribute data
+## redist_func: save or redistribute data
 
 Called on ranks that are **about to exit** when a reconfiguration completes. Use it to transfer your data to the surviving processes.
 
@@ -35,7 +35,7 @@ void send_via_intercomm(void)
 }
 ```
 
-## restart_func — restore data
+## restart_func: restore data
 
 Called on processes that have **just been spawned or restarted** after a reconfiguration. Use it to read data saved by `redist_func`.
 
@@ -60,7 +60,7 @@ Pass `restart_func` as the second argument of `DMR_AUTO`:
 DMR_AUTO(dmr_init(argc, argv), (void)NULL, load_checkpoint(), cleanup());
 ```
 
-## finalize_func — clean up resources
+## finalize_func: clean up resources
 
 Called on any rank that is about to terminate (whether due to reconfiguration or normal exit). Free heap memory, close file handles, etc.
 

@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     MPI_Init(&argc, &argv);
 
     /* dmr_init may return DMR_RESTART_RECONF if this process was spawned
-       as part of an expansion — load_checkpoint() handles that case. */
+       as part of an expansion; load_checkpoint() handles that case. */
     DMR_AUTO(dmr_init(argc, argv), (void)NULL, load_checkpoint(), cleanup());
 
     dmr_set_policy_min_nodes(2);
@@ -69,7 +69,7 @@ void load_checkpoint(void)
 
 Call `dmr_check` inside the main loop with a `DMRSuggestion`. **Collective.**
 
-When DMR decides to reconfigure it returns `DMR_RECONF`. `DMR_AUTO` then calls `dmr_reconfigure()` internally, which handles the MPI communicator setup. The leaving processes receive `DMR_REDIST_FINALIZE` from `dmr_reconfigure()` — `DMR_AUTO` calls `redist_func` and `finalize_func` on them and terminates those ranks.
+When DMR decides to reconfigure it returns `DMR_RECONF`. `DMR_AUTO` then calls `dmr_reconfigure()` internally, which handles the MPI communicator setup. The leaving processes receive `DMR_REDIST_FINALIZE` from `dmr_reconfigure()` ; `DMR_AUTO` calls `redist_func` and `finalize_func` on them and terminates those ranks.
 
 ## dmr_reconfigure
 

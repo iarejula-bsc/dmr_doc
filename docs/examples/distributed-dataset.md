@@ -35,5 +35,5 @@ dmr mpirun -n 1 ./distributed-dataset-sleep --array-size 64 --iterations 20
 
 ## Key points
 
-- `on_exit` **must** send the local slice to a surviving rank before returning — otherwise data is lost.
+- `on_exit` **must** send the local slice to a surviving rank before returning; otherwise data is lost.
 - After a reconfiguration, recompute local slice bounds from the new `MPI_Comm_size`.

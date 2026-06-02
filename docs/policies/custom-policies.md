@@ -3,7 +3,7 @@ sidebar_position: 3
 title: Custom Policy Logic
 ---
 
-DMR does not have a plugin policy interface — reconfiguration decisions live in your application code. You implement the logic yourself and pass `SHOULD_EXPAND`, `SHOULD_SHRINK`, or `SHOULD_STAY` to `dmr_check` accordingly.
+DMR does not have a plugin policy interface; reconfiguration decisions live in your application code. You implement the logic yourself and pass `SHOULD_EXPAND`, `SHOULD_SHRINK`, or `SHOULD_STAY` to `dmr_check` accordingly.
 
 ## Pattern
 
@@ -53,7 +53,7 @@ If your application decides it no longer wants an expansion that is already in p
 
 ```c
 if (dmr_pending_expansion() && no_longer_need_resources()) {
-    dmr_cancel_expansion();  // collective — all ranks must call
+    dmr_cancel_expansion();  // collective, all ranks must call
 }
 ```
 

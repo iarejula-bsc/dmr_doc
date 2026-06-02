@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 ## MareNostrum 5
 
-The easiest path: load the pre-built DMR module and you're done — no compilation needed.
+The easiest path: load the pre-built DMR module and you're done, no compilation needed.
 
 ```bash
 module use /apps/GPP/DMR/dmr-modules
@@ -20,7 +20,7 @@ module load dmr
 
 That single module provides the library, headers, and all dependencies (Open MPI, PRRTE, OpenPMIX). Use this for production runs.
 
-If you need to **compile DMR yourself** on MN5 (e.g. to modify the source), see [MareNostrum 5 — Manual Build](installation-mn5).
+If you need to **compile DMR yourself** on MN5 (e.g. to modify the source), see [MareNostrum 5 Manual Build](installation-mn5).
 
   </TabItem>
   <TabItem value="other" label="Other systems">
@@ -32,7 +32,7 @@ If you need to **compile DMR yourself** on MN5 (e.g. to modify the source), see 
 DMR requires a specific build of Open MPI with external OpenPMIX and PRRTE. Your system's default Open MPI is almost certainly incompatible.
 
 :::caution
-Even if you already have Open MPI installed, follow these steps — the required PRRTE features are not present in standard distributions.
+Even if you already have Open MPI installed, follow these steps; the required PRRTE features are not present in standard distributions.
 :::
 
 Set your install prefixes:
@@ -86,7 +86,7 @@ Add the `export` lines to your `.bashrc`. On some systems:
 sudo dnf install flex libevent-devel hwloc-devel
 ```
 
-**DLB / TALP** (optional — only for the CE policy)
+**DLB / TALP** (optional, only for the CE policy)
 
 ```bash
 export DLB_PREFIX=/path/to/dlb

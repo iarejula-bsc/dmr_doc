@@ -32,21 +32,21 @@ DMR_AUTO(the_action, redist_func, restart_func, finalize_func)
 
 ## Examples
 
-### Init — checkpoint-restart pattern
+### Init: checkpoint-restart pattern
 
 ```c
 // On restart after reconfiguration, load_checkpoint() reads the saved state.
 DMR_AUTO(dmr_init(argc, argv), (void)NULL, load_checkpoint(), cleanup());
 ```
 
-### Check — checkpoint-restart pattern
+### Check: checkpoint-restart pattern
 
 ```c
 // save_checkpoint() is called on ranks that are about to exit.
 DMR_AUTO(dmr_check(ROUND_POLICY), save_checkpoint(), (void)NULL, cleanup());
 ```
 
-### Check — intercommunicator pattern
+### Check: intercommunicator pattern
 
 ```c
 // With DMR_CHECKPOINT_RESTART=0, use DMR_INTERCOMM to send data directly.

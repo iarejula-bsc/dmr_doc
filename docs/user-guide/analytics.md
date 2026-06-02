@@ -36,4 +36,4 @@ Example output:
 
 ## TALP-based analytics
 
-When compiled with `DMR_USE_TALP=1`, the CE policy additionally reads TALP metrics — including communication efficiency — to make scaling decisions. These are collected via DLB's `CollectPOPMetrics` MPI collective inside the policy's `populate` callback.
+When compiled with `DMR_USE_TALP=1`, the CE policy additionally reads TALP metrics, including communication efficiency, to make scaling decisions. These are collected via DLB's `CollectPOPMetrics` MPI collective inside the policy's `populate` callback.

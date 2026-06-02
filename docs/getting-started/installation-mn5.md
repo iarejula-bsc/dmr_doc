@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: MareNostrum 5 — Manual Build
+title: MareNostrum 5 Manual Build
 ---
 
 Use this guide only if you need to **compile DMR from source** on MareNostrum 5. For normal use, `module load dmr` is all you need (see [Installation](installation)).
@@ -14,7 +14,7 @@ module use /apps/GPP/DMR/dmr-modules
 module load openpmix-for-dmr
 module load prrte-for-dmr
 module load openmpi-for-dmr
-module load dlb-for-dmr   # optional — only for CE policy
+module load dlb-for-dmr   # optional, only for CE policy
 ```
 
 These set `OPENPMIX_PREFIX`, `PRRTE_PREFIX`, `OMPI_PREFIX`, and `DLB_PREFIX` automatically.

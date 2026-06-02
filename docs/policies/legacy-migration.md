@@ -23,7 +23,7 @@ Policy parameters can be set via environment variables, CMake flags, or runtime 
 
 ## Runtime setter functions
 
-All setters are **collective** — all MPI ranks must call them:
+All setters are **collective**; all MPI ranks must call them:
 
 ```c
 dmr_set_policy_min_nodes(int nodes);

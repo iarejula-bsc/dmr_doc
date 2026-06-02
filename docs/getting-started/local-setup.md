@@ -3,7 +3,7 @@ sidebar_position: 2
 title: Local Quick Setup
 ---
 
-The fastest way to try DMR locally is with **MiniDMR**, a CLI that spins up a Docker-based multi-node Slurm cluster in seconds — no HPC access required.
+The fastest way to try DMR locally is with **MiniDMR**, a CLI that spins up a Docker-based multi-node Slurm cluster in seconds, no HPC access required.
 
 ## 1. Install MiniDMR
 
@@ -122,6 +122,6 @@ minidmr stop
 
 ## Next steps
 
-- [Installation](installation) — set up DMR on a real cluster
-- [Application Structure](../user-guide/app-structure) — understand the full lifecycle
-- [Policies Overview](../policies/overview) — choose or implement a scaling policy
+- [Installation](installation): set up DMR on a real cluster
+- [Application Structure](../user-guide/app-structure): understand the full lifecycle
+- [Policies Overview](../policies/overview): choose or implement a scaling policy

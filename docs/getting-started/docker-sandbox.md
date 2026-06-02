@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: MiniDMR — Local Cluster
+title: MiniDMR Local Cluster
 ---
 
 **MiniDMR** is a CLI tool for creating and managing local Docker-based DMR clusters. It is the recommended way to run DMR locally for demos, development, and CI pipelines.
@@ -11,7 +11,7 @@ title: MiniDMR — Local Cluster
 |----------|-------------|
 | **Demos / workshops** | Reproducible multi-node cluster, starts and stops cleanly |
 | **DMR core development** | Container images with all dependencies preinstalled |
-| **App development** | Separate image with DMR fully installed — focus on your app |
+| **App development** | Separate image with DMR fully installed; focus on your app |
 | **CI pipelines** | Temporary containerized cluster for integration testing |
 
 ## Installation

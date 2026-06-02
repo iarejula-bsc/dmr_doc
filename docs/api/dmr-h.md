@@ -34,8 +34,8 @@ Returned by `dmr_init`, `dmr_check`, `dmr_reconfigure`, and `dmr_finalize`.
 | `DMR_NO_ACTION` | No action required |
 | `DMR_RECONF` | Call `dmr_reconfigure()` |
 | `DMR_RESTART_RECONF` | Load checkpoint/data, then call `dmr_reconfigure()` |
-| `DMR_REDIST_FINALIZE` | Save/send data, then call `dmr_finalize()` — rank exits |
-| `DMR_FINALIZE` | Call `dmr_finalize()` — rank exits |
+| `DMR_REDIST_FINALIZE` | Save/send data, then call `dmr_finalize()` (rank exits) |
+| `DMR_FINALIZE` | Call `dmr_finalize()` (rank exits) |
 | `DMR_CLEANUP` | Optional cleanup, rank continues |
 | `DMR_ERROR` | An error occurred |
 
