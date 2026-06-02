@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: dmr.h
+title: Core API
 ---
 
 ```c
@@ -15,7 +15,7 @@ Passed to `dmr_check` to select the reconfiguration policy.
 
 | Value | Description |
 |-------|-------------|
-| `ROUND_POLICY` | Double node count up to `max_nodes`, then wrap to `min_nodes` |
+| `ROUND_POLICY` | Multiply current node count by stride up to `max_nodes`, then wrap to `min_nodes` |
 | `LIST_POLICY` | Iterate a fixed list of node counts |
 | `CE_POLICY` | Target a communication efficiency value (requires TALP) |
 | `SLURM4DMR_ROUND_POLICY` | `ROUND_POLICY` variant for Slurm4DMR |
@@ -150,6 +150,14 @@ int dmr_get_nodes_next_shrink(void);
 int dmr_get_procs_next_shrink(void);
 DMRAction dmr_get_last_action(void);
 ```
+
+## Expansion control
+
+```c
+DMRStatus dmr_cancel_expansion(void);
+```
+
+Cancels a pending expansion job. **Collective** — all ranks must call. Only valid when `dmr_pending_expansion()` returns `1`.
 
 ## Analytics
 

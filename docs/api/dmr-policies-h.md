@@ -1,30 +1,59 @@
 ---
 sidebar_position: 2
-title: Policy API summary
+title: Policy API
 ---
+## Selecting a policy
 
-DMR's policy system is entirely contained in `dmr.h` — there is no separate `dmr_policies.h`. Policies are selected by passing a `DMRSuggestion` enum value to `dmr_check`.
-
-## Quick reference
+Pass a `DMRSuggestion` value to `dmr_check`:
 
 ```c
 #include "dmr.h"
 
-// Select policy
-DMRAction action = dmr_check(ROUND_POLICY);
-
-// Configure policy bounds (collective)
-dmr_set_policy_min_nodes(2);
-dmr_set_policy_max_nodes(16);
-dmr_set_policy_stride(2);
-dmr_set_policy_pref_nodes(8);   // for SLURM4DMR_QUEUE_POLICY
-
-// Manual sizing overrides (rank 0 only, reset after each reconf)
-dmr_set_nodes_next_expand(4);
-dmr_set_ppn_next_expand(8);     // processes per node
-dmr_set_nodes_next_shrink(2);
+DMR_AUTO(dmr_check(ROUND_POLICY), save(), (void)NULL, cleanup());
 ```
 
-For the full type and function documentation see [dmr.h](dmr-h).
+See [DMRSuggestion](core-api#dmrsuggestion) for all available values.
+
+## Policy bounds (collective)
+
+```c
+DMRStatus dmr_set_policy_min_nodes(int nodes);
+DMRStatus dmr_set_policy_max_nodes(int nodes);
+DMRStatus dmr_set_policy_stride(int multiplier);
+DMRStatus dmr_set_policy_pref_nodes(int nodes);
+DMRStatus dmr_set_reconf_step_inhibitor(int steps);
+```
+
+## Expand/shrink sizing (rank 0 only)
+
+Values apply to the next reconfiguration only and reset afterwards.
+
+```c
+DMRStatus dmr_set_nodes_next_expand(int nodes);
+DMRStatus dmr_set_procs_next_expand(int procs);
+DMRStatus dmr_set_ppn_next_expand(int ppn);
+DMRStatus dmr_set_nodes_next_shrink(int nodes);
+DMRStatus dmr_set_procs_next_shrink(int procs);
+DMRStatus dmr_set_jobs_next_shrink(int jobs);
+```
+
+## Expansion control (collective)
+
+```c
+DMRStatus dmr_cancel_expansion(void);
+```
+
+## State queries
+
+```c
+int dmr_get_current_node_count(void);
+int dmr_get_reconfig_count(void);
+int dmr_get_active_expansions(void);
+int dmr_pending_expansion(void);
+int dmr_get_nodes_next_expand(void);
+int dmr_get_procs_next_expand(void);
+int dmr_get_nodes_next_shrink(void);
+int dmr_get_procs_next_shrink(void);
+```
 
 For usage patterns see [Policies Overview](../user-guide/policies/overview) and [DMR Policies](../user-guide/policies/dmr-policies).
