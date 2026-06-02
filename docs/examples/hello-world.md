@@ -21,7 +21,7 @@ cd examples/hello-world
 cmake -B build && cmake --build build
 
 DMR_DEFAULT_POLICY_MIN=2 DMR_DEFAULT_POLICY_MAX=4 \
-mpirun -n 2 ./hello-world
+dmr mpirun -n 2 ./hello-world
 ```
 
 Expected output:

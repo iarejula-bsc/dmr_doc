@@ -30,7 +30,7 @@ cd examples/distributed-dataset-sleep
 cmake -B build && cmake --build build
 
 DMR_DEFAULT_POLICY_MIN=1 DMR_DEFAULT_POLICY_MAX=8 DMR_DEFAULT_POLICY_STRIDE=2 \
-mpirun -n 1 ./distributed-dataset-sleep --array-size 64 --iterations 20
+dmr mpirun -n 1 ./distributed-dataset-sleep --array-size 64 --iterations 20
 ```
 
 ## Key points

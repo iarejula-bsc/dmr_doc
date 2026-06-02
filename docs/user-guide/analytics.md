@@ -9,7 +9,7 @@ DMR collects lightweight analytics at each reconfiguration and can print them at
 
 ```bash
 export DMR_PRINT_ANALYTICS=1
-mpirun -n 4 ./my_app
+dmr mpirun -n 4 ./my_app
 ```
 
 Or at compile time:

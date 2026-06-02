@@ -81,5 +81,9 @@ int main(int argc, char **argv)
 
 ```bash
 mpicc -o my_app my_app.c -ldmr
-DMR_DEFAULT_POLICY_MIN=1 DMR_DEFAULT_POLICY_MAX=8 mpirun -n 2 ./my_app
+DMR_DEFAULT_POLICY_MIN=1 DMR_DEFAULT_POLICY_MAX=8 dmr mpirun -n 2 ./my_app
 ```
+
+:::caution
+Always launch with `dmr mpirun` — calling `mpirun` directly causes `Did you launch with the DMR wrapper?` errors.
+:::

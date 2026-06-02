@@ -37,7 +37,7 @@ dmr_set_policy_pref_nodes(8);  // preferred count for QUEUE_POLICY
 Or set them via environment variables (see [Configuration](../user-guide/configuration)):
 
 ```bash
-DMR_DEFAULT_POLICY_MIN=2 DMR_DEFAULT_POLICY_MAX=16 mpirun -n 2 ./my_app
+DMR_DEFAULT_POLICY_MIN=2 DMR_DEFAULT_POLICY_MAX=16 dmr mpirun -n 2 ./my_app
 ```
 
 ## Manual control
