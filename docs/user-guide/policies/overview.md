@@ -23,9 +23,13 @@ DMRAction action = dmr_check(ROUND_POLICY);
 | `SHOULD_SHRINK` | Manual: shrink by `DMR_NODES_IN_SHRINK` nodes |
 | `SHOULD_STAY` | Manual: do not reconfigure this iteration |
 
-## Configuring policies at runtime
+## Configuring policies
 
-Policy parameters can be set before the main loop. All setters are **collective** (all ranks must call):
+Parameters can be set at three levels, in order of priority (highest first):
+
+1. **Runtime** — setter functions called before the main loop (collective, all ranks must call)
+2. **Environment variable** — set before launching with `dmr`
+3. **Compile time** — CMake flag at build time
 
 ```c
 dmr_set_policy_min_nodes(2);   // DMR will not go below 2 nodes
@@ -34,11 +38,11 @@ dmr_set_policy_stride(2);      // multiplier for ROUND_POLICY
 dmr_set_policy_pref_nodes(8);  // preferred count for QUEUE_POLICY
 ```
 
-Or set them via environment variables (see [Configuration](../configuration)):
-
 ```bash
 DMR_DEFAULT_POLICY_MIN=2 DMR_DEFAULT_POLICY_MAX=16 dmr mpirun -n 2 ./my_app
 ```
+
+Each policy's accepted parameters are listed in [DMR Policies](dmr-policies).
 
 ## Manual control
 
