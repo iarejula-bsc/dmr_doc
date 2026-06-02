@@ -32,7 +32,7 @@ The script adds the install directory to the user `PATH` automatically.
 ## 2. Start a cluster
 
 ```bash
-minidmr start --nodes 4
+minidmr start
 minidmr enter   # drops you into the controller node
 ```
 
