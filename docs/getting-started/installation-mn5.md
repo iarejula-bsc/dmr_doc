@@ -38,6 +38,10 @@ cmake -B build \
   -DDMR_USE_TALP=1
 ```
 
+:::note[TODO]
+Document Slurm4DMR build with custom Slurm on MareNostrum 5.
+:::
+
 ## Building the dependencies manually (advanced)
 
 If you cannot use the pre-built modules, follow the same steps as [Other systems](installation?system=other) using MN5-specific paths. For Open MPI, add the MN5 UCX path:
