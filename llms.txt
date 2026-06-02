@@ -22,13 +22,12 @@ Source: https://iarejula-bsc.github.io/dmr_doc
 - [Common Issues](https://iarejula-bsc.github.io/dmr_doc/user-guide/common-issues/)
 - [Configuration](https://iarejula-bsc.github.io/dmr_doc/user-guide/configuration/)
 - [Data Redistribution](https://iarejula-bsc.github.io/dmr_doc/user-guide/data-redistribution/)
-- [The DMR_AUTO Macro](https://iarejula-bsc.github.io/dmr_doc/user-guide/dmr-auto-macro/)
 - [Built-in Policies](https://iarejula-bsc.github.io/dmr_doc/user-guide/policies/builtin-policies/)
 - [Custom Policy Logic](https://iarejula-bsc.github.io/dmr_doc/user-guide/policies/custom-policies/)
 - [Policy Configuration Reference](https://iarejula-bsc.github.io/dmr_doc/user-guide/policies/legacy-migration/)
 - [Overview](https://iarejula-bsc.github.io/dmr_doc/user-guide/policies/overview/)
 - [Runtime State Reference](https://iarejula-bsc.github.io/dmr_doc/user-guide/policies/policy-context-reference/)
-- [Reconfiguration Callbacks](https://iarejula-bsc.github.io/dmr_doc/user-guide/reconfiguration-callbacks/)
+- [Reconfiguration Handling](https://iarejula-bsc.github.io/dmr_doc/user-guide/reconfiguration-handling/)
 
 ## Full content
 > For the full content of each page see https://iarejula-bsc.github.io/dmr_doc/llms-full.txt
