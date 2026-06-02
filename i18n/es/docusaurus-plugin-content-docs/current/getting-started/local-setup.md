@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Configuración rápida local
+title: Configuración local rápida
 ---
 
 La forma más rápida de probar DMR en local es usar **MiniDMR**, una CLI que levanta en segundos un clúster Slurm multinodo basado en Docker, sin necesidad de acceso a HPC.
