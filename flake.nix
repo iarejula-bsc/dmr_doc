@@ -14,20 +14,19 @@
         devShells.default = pkgs.mkShell {
           packages = [
             pkgs.nodejs_22
-            pkgs.pnpm
           ];
 
           shellHook = ''
             echo "DMR docs environment ready (Node $(node --version), pnpm $(pnpm --version))."
             echo ""
             echo "First time setup:"
-            echo "  pnpm install"
+            echo "  npm install"
             echo ""
             echo "Dev server:"
-            echo "  pnpm dev"
+            echo "  npm start"
             echo ""
             echo "Build:"
-            echo "  pnpm build"
+            echo "  npm run build"
           '';
         };
       }
