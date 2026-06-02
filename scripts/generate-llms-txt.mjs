@@ -7,7 +7,7 @@ import { join, relative } from 'path';
 
 const DOCS_DIR = new URL('../docs', import.meta.url).pathname;
 const OUT_FILE = new URL('../static/llms.txt', import.meta.url).pathname;
-const SITE_URL = 'https://your-dmr-docs-site.example.com';
+const SITE_URL = 'https://iarejula-bsc.github.io/dmr_doc';
 
 function getTitle(content) {
   const m = content.match(/^title:\s*(.+)$/m);

@@ -9,8 +9,11 @@ const config = {
 
   future: { v4: true },
 
-  url: 'https://your-dmr-docs-site.example.com',
-  baseUrl: '/',
+  url: 'https://iarejula-bsc.github.io',
+  baseUrl: '/dmr_doc/',
+  organizationName: 'iarejula-bsc',
+  projectName: 'dmr_doc',
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
