@@ -27,6 +27,7 @@ Source: https://iarejula-bsc.github.io/dmr_doc
 - [Common Issues](https://iarejula-bsc.github.io/dmr_doc/user-guide/common-issues/)
 - [Configuration](https://iarejula-bsc.github.io/dmr_doc/user-guide/configuration/)
 - [The DMR_AUTO Macro](https://iarejula-bsc.github.io/dmr_doc/user-guide/dmr-auto-macro/)
+- [Intercommunicator Mode](https://iarejula-bsc.github.io/dmr_doc/user-guide/intercommunicator/)
 - [Reconfiguration Callbacks](https://iarejula-bsc.github.io/dmr_doc/user-guide/reconfiguration-callbacks/)
 
 ## Full content
