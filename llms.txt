@@ -24,6 +24,7 @@ Source: https://iarejula-bsc.github.io/dmr_doc
 - [References](https://iarejula-bsc.github.io/dmr_doc/references/)
 - [Analytics](https://iarejula-bsc.github.io/dmr_doc/user-guide/analytics/)
 - [Application Structure](https://iarejula-bsc.github.io/dmr_doc/user-guide/app-structure/)
+- [Common Issues](https://iarejula-bsc.github.io/dmr_doc/user-guide/common-issues/)
 - [Configuration](https://iarejula-bsc.github.io/dmr_doc/user-guide/configuration/)
 - [The DMR_AUTO Macro](https://iarejula-bsc.github.io/dmr_doc/user-guide/dmr-auto-macro/)
 - [Reconfiguration Callbacks](https://iarejula-bsc.github.io/dmr_doc/user-guide/reconfiguration-callbacks/)
