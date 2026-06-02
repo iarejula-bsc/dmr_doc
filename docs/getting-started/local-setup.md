@@ -64,8 +64,12 @@ int main(int argc, char *argv[])
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
+    /* Print current process count so we can see the expansion happening. */
     if (rank == 0) printf("Running with %d process(es)\n", size);
 
+    /* Each time main() runs we check the current size. If we have fewer than
+       4 processes, request an expansion. DMR will checkpoint, exit, and relaunch
+       the executable with one more node; main() will start again from the top. */
     if (size < 4) {
         /* Sleep before requesting the next expansion. Consecutive expands that
            arrive too quickly can cause overlapping MPI spawn operations to
