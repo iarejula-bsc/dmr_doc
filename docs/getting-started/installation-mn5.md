@@ -29,7 +29,7 @@ cmake --build build -j112
 cmake --install build
 ```
 
-Set additional options as needed (see the full list at [Configuration: CMake options](../user-guide/configuration#cmake-options)):
+Set additional options as needed, see [Configuration: CMake options](../user-guide/configuration#cmake-options) for the full list:
 
 ```bash
 cmake -B build \
@@ -37,8 +37,6 @@ cmake -B build \
   -DDMR_PROCS_PER_NODE=112 \
   -DDMR_USE_TALP=1
 ```
-
-See [Configuration](../user-guide/configuration) for the full list of CMake options.
 
 ## Building the dependencies manually (advanced)
 
