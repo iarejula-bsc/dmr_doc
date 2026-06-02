@@ -27,6 +27,7 @@ Inside the cluster, create `hello_dmr.c`:
 ```c
 #include <mpi.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "dmr.h"
 
 static void save(void)    { /* save state before leaving processes exit */ }
@@ -48,7 +49,10 @@ int main(int argc, char *argv[])
     if (rank == 0) printf("Running with %d process(es)\n", size);
 
     if (size < 4) {
-        /* Expand by one node. DMR will checkpoint and restart with more processes. */
+        /* Sleep before requesting the next expansion. Consecutive expands that
+           arrive too quickly can cause overlapping MPI spawn operations to
+           interfere with each other, leading to a launch failure. */
+        sleep(2);
         DMR_AUTO(dmr_check(SHOULD_EXPAND), save(), (void)NULL, cleanup());
     }
 
@@ -71,13 +75,14 @@ DMR must run inside a **Slurm job allocation** via the `dmr` wrapper. Create a s
 #!/bin/bash
 #SBATCH --time=00:10:00
 #SBATCH --exclusive
-#SBATCH -N 4
+#SBATCH -N 1
 
 export SLURM_ROOT="${SLURM_ROOT:-/usr}"
 export PATH=$SLURM_ROOT/bin:$PATH
 export LD_LIBRARY_PATH=$DMR_PATH/build/lib:$LD_LIBRARY_PATH
 
 export DMR_PROCS_PER_NODE=1
+export DMR_DEFAULT_POLICY_MAX=4
 
 NODELIST_WITH_COUNTS=$(scontrol show hostnames "$SLURM_JOB_NODELIST" \
   | awk -v n="$DMR_PROCS_PER_NODE" '{print $1 ":" n}' \
