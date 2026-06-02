@@ -4,5 +4,5 @@ title: dmr_policies.h
 ---
 
 :::caution Traducción pendiente
-Esta página aún no está traducida. Consulta la [versión en inglés](/en/api/dmr-policies-h/) mientras tanto.
+Esta página aún no está traducida. Consulta la [versión en inglés](/api/dmr-policies-h/) mientras tanto.
 :::

@@ -4,5 +4,5 @@ title: Distributed Dataset
 ---
 
 :::caution Traducción pendiente
-Esta página aún no está traducida. Consulta la [versión en inglés](/en/examples/distributed-dataset/) mientras tanto.
+Esta página aún no está traducida. Consulta la [versión en inglés](/examples/distributed-dataset/) mientras tanto.
 :::

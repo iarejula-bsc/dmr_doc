@@ -4,5 +4,5 @@ title: Callbacks de reconfiguración
 ---
 
 :::caution Traducción pendiente
-Esta página aún no está traducida. Consulta la [versión en inglés](/en/user-guide/reconfiguration-callbacks/) mientras tanto.
+Esta página aún no está traducida. Consulta la [versión en inglés](/user-guide/reconfiguration-callbacks/) mientras tanto.
 :::

@@ -4,5 +4,5 @@ title: Configuración
 ---
 
 :::caution Traducción pendiente
-Esta página aún no está traducida. Consulta la [versión en inglés](/en/user-guide/configuration/) mientras tanto.
+Esta página aún no está traducida. Consulta la [versión en inglés](/user-guide/configuration/) mientras tanto.
 :::

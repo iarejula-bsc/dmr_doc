@@ -4,5 +4,5 @@ title: ¿Qué es DMR?
 ---
 
 :::caution Traducción pendiente
-Esta página aún no está traducida. Consulta la [versión en inglés](/en/getting-started/what-is-dmr/) mientras tanto.
+Esta página aún no está traducida. Consulta la [versión en inglés](/getting-started/what-is-dmr/) mientras tanto.
 :::
