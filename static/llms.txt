@@ -1,0 +1,31 @@
+# DMR Documentation
+> Dynamic MPI Reconfiguration library by the Barcelona Supercomputing Center.
+
+Source: https://iarejula-bsc.github.io/dmr_doc
+
+## Pages
+
+- [dmr.h](https://iarejula-bsc.github.io/dmr_doc/api/dmr-h/)
+- [dmr_policies.h](https://iarejula-bsc.github.io/dmr_doc/api/dmr-policies-h/)
+- [Distributed Dataset](https://iarejula-bsc.github.io/dmr_doc/examples/distributed-dataset/)
+- [Hello World](https://iarejula-bsc.github.io/dmr_doc/examples/hello-world/)
+- [MiniDMR — Local Cluster](https://iarejula-bsc.github.io/dmr_doc/getting-started/docker-sandbox/)
+- [MareNostrum 5 Manual Install](https://iarejula-bsc.github.io/dmr_doc/getting-started/installation-mn5/)
+- [Installation](https://iarejula-bsc.github.io/dmr_doc/getting-started/installation/)
+- [Modes of Operation](https://iarejula-bsc.github.io/dmr_doc/getting-started/modes-of-operation/)
+- [Quick Start](https://iarejula-bsc.github.io/dmr_doc/getting-started/quick-start/)
+- [What is DMR?](https://iarejula-bsc.github.io/dmr_doc/getting-started/what-is-dmr/)
+- [Built-in Policies](https://iarejula-bsc.github.io/dmr_doc/policies/builtin-policies/)
+- [Custom Policies](https://iarejula-bsc.github.io/dmr_doc/policies/custom-policies/)
+- [Migration from Legacy API](https://iarejula-bsc.github.io/dmr_doc/policies/legacy-migration/)
+- [Overview](https://iarejula-bsc.github.io/dmr_doc/policies/overview/)
+- [Policy Context Reference](https://iarejula-bsc.github.io/dmr_doc/policies/policy-context-reference/)
+- [References](https://iarejula-bsc.github.io/dmr_doc/references/)
+- [Analytics](https://iarejula-bsc.github.io/dmr_doc/user-guide/analytics/)
+- [Application Structure](https://iarejula-bsc.github.io/dmr_doc/user-guide/app-structure/)
+- [Configuration](https://iarejula-bsc.github.io/dmr_doc/user-guide/configuration/)
+- [The DMR_AUTO Macro](https://iarejula-bsc.github.io/dmr_doc/user-guide/dmr-auto-macro/)
+- [Reconfiguration Callbacks](https://iarejula-bsc.github.io/dmr_doc/user-guide/reconfiguration-callbacks/)
+
+## Full content
+> For the full content of each page see https://iarejula-bsc.github.io/dmr_doc/llms-full.txt
