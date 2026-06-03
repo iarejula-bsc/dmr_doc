@@ -33,14 +33,11 @@ The script adds the install directory to the user `PATH` automatically.
 
 ```bash
 minidmr start
-minidmr enter   # drops you into the controller node
 ```
-
-You are now inside a container with Open MPI, Slurm, and DMR preinstalled.
 
 ## 3. Write your first DMR application
 
-Inside the cluster, create `hello_dmr.c`:
+Open your favourite text editor and create `hello_dmr.c` anywhere inside your home directory:
 
 ```c
 #include <mpi.h>
@@ -85,7 +82,17 @@ int main(int argc, char *argv[])
 }
 ```
 
-## 4. Compile and run
+## 4. Enter the cluster
+
+Navigate to the folder where you saved `hello_dmr.c`, then run:
+
+```bash
+minidmr enter
+```
+
+MiniDMR mounts your host `$HOME` inside the container and drops you into the same directory where you ran `minidmr enter`, so your file is already there. You are now inside a container with Open MPI, Slurm, and DMR preinstalled.
+
+## 5. Compile and run
 
 ```bash
 mpicc -o hello_dmr hello_dmr.c -ldmr
@@ -117,7 +124,7 @@ tail -f slurm-*.out
 
 You should see `Running with 1 process(es)`, then `Running with 2 process(es)`, and so on until 4.
 
-## 5. Stop the cluster
+## 6. Stop the cluster
 
 ```bash
 exit          # leave the container
