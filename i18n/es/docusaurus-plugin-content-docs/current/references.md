@@ -5,6 +5,8 @@ title: Referencias
 
 ## Equipo
 
+Contacto: [accelecom@bsc.es](mailto:accelecom@bsc.es)
+
 ### Núcleo
 
 - Sergio Iserte (BSC)

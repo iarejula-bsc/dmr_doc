@@ -5,6 +5,8 @@ title: References
 
 ## Team
 
+Contact: [accelecom@bsc.es](mailto:accelecom@bsc.es)
+
 ### Core
 
 - Sergio Iserte (BSC)
