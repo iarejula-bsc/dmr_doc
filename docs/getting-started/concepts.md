@@ -1,6 +1,6 @@
 ---
-sidebar_position: 5
-title: Applying DMR to Your Application
+sidebar_position: 2
+title: Concepts
 ---
 
 This guide helps you evaluate whether DMR fits your application and walks through the key steps to integrate it.
@@ -19,6 +19,27 @@ It is less suitable when:
 - The cost of saving and restoring state is too high relative to the time saved by scaling.
 
 **If your application already implements checkpoint-restart**, DMR is trivially easy to adopt: hook your existing save/load logic into `redist_func` and `restart_func` and add `dmr_check` at the checkpoint point.
+
+DMR offers two modes of operation, which differ in how they interact with the resource manager.
+
+## Modes of operation
+
+### Production environment with DMR@Jobs
+
+DMR@Jobs connects to your **system's default Slurm instance**. Your application runs as a regular Slurm job and DMR requests node additions or removals through the standard Slurm API.
+
+### Controlled environment with Slurm4DMR
+
+Slurm4DMR runs a **nested Slurm instance** inside a fixed resource allocation managed by the outer resource manager. Your job owns a fixed set of nodes, and Slurm4DMR reassigns them internally as the application expands or shrinks.
+
+:::note
+Slurm4DMR is currently only intended to run on **MareNostrum 5**.
+:::
+
+:::info[Not yet documented]
+When to use Slurm4DMR vs DMR@Jobs is not yet fully documented. For guidance contact us at [accelcom@bsc.es](mailto:accelcom@bsc.es).
+:::
+
 
 ## Finding good reconfiguration points
 

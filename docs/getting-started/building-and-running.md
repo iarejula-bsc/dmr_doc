@@ -1,6 +1,6 @@
 ---
-sidebar_position: 4
-title: Building and Running Your Application
+sidebar_position: 5
+title: Building and Running
 ---
 
 Once DMR is available on your system, you compile your application against it and launch it through the DMR wrapper. **How you compile and launch depends on the [mode of operation](modes-of-operation)** you target.
