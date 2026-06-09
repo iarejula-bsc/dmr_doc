@@ -52,6 +52,19 @@ Your application links against `libdmr` the same way in both cases, and runs in 
 
 DMR must run inside a **Slurm job allocation**, launched through the `dmr` wrapper (which wraps `mpirun`). The way you do this differs by mode.
 
+### Configuring DMR at launch
+
+DMR reads environment variables at launch, so you can tune its behaviour from the submit script without recompiling. The most common ones:
+
+```bash
+export DMR_DEBUG_LEVEL=1       # 0 = off, 1 = rank 0 only, 2 = all ranks
+export DMR_PRINT_ANALYTICS=1   # print an analytics line at each reconfiguration
+export DMR_DEFAULT_POLICY_MIN=2
+export DMR_DEFAULT_POLICY_MAX=4
+```
+
+See [Configuration](../user-guide/configuration#runtime-environment-variables) for the full list.
+
 ### DMR@Jobs
 
 Submit a normal batch job that invokes the wrapper. DMR requests node additions or removals from the system's Slurm as the application reconfigures.
@@ -77,7 +90,7 @@ sbatch submit.sh
 
 ### Slurm4DMR
 
-Slurm4DMR runs a **nested Slurm instance** inside a fixed allocation, which reassigns nodes internally as the application reconfigures. Compile with `-DUSE_SLURM4DMR`, then use a launch script that deploys the nested Slurm and submits your job to it (the wrapper invocation is the same `dmr mpirun` pattern, but it runs against the inner Slurm).
+Slurm4DMR runs a **nested Slurm instance** inside a fixed allocation, which reassigns nodes internally as the application reconfigures. Requires a DMR built with `SLURM4DMR`, then a launch script that deploys the nested Slurm and submits your job to it (the wrapper invocation is the same `dmr mpirun` pattern, but it runs against the inner Slurm).
 
 :::note
 Slurm4DMR is currently only intended to run on **MareNostrum 5**. The full nested-deployment setup is not yet documented here; for help contact us at [accelcom@bsc.es](mailto:accelcom@bsc.es).

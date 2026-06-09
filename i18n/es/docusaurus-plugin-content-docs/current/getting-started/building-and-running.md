@@ -52,6 +52,19 @@ Tu aplicación enlaza con `libdmr` igual en ambos casos, y se ejecuta en el modo
 
 DMR debe ejecutarse dentro de una **asignación de Slurm**, lanzada a través del wrapper `dmr` (que envuelve a `mpirun`). La forma de hacerlo difiere según el modo.
 
+### Configurar DMR en el lanzamiento
+
+DMR lee variables de entorno en el lanzamiento, así que puedes ajustar su comportamiento desde el script de envío sin recompilar. Las más habituales:
+
+```bash
+export DMR_DEBUG_LEVEL=1       # 0 = desactivado, 1 = solo rank 0, 2 = todos los ranks
+export DMR_PRINT_ANALYTICS=1   # imprime una línea de analíticas en cada reconfiguración
+export DMR_DEFAULT_POLICY_MIN=2
+export DMR_DEFAULT_POLICY_MAX=4
+```
+
+Consulta [Configuración](../user-guide/configuration#variables-de-entorno-en-tiempo-de-ejecución) para ver la lista completa.
+
 ### DMR@Jobs
 
 Envía un trabajo por lotes normal que invoque el wrapper. DMR solicita añadir o quitar nodos al Slurm del sistema a medida que la aplicación se reconfigura.
@@ -77,7 +90,7 @@ sbatch submit.sh
 
 ### Slurm4DMR
 
-Slurm4DMR ejecuta una **instancia anidada de Slurm** dentro de una asignación fija, que reasigna nodos internamente a medida que la aplicación se reconfigura. Compila con `-DUSE_SLURM4DMR` y usa un script de lanzamiento que despliega el Slurm anidado y envía tu trabajo a él (la invocación del wrapper sigue el mismo patrón `dmr mpirun`, pero se ejecuta contra el Slurm interno).
+Slurm4DMR ejecuta una **instancia anidada de Slurm** dentro de una asignación fija, que reasigna nodos internamente a medida que la aplicación se reconfigura. Requiere un DMR compilado con `SLURM4DMR` y un script de lanzamiento que despliega el Slurm anidado y envía tu trabajo a él (la invocación del wrapper sigue el mismo patrón `dmr mpirun`, pero se ejecuta contra el Slurm interno).
 
 :::note
 Por ahora Slurm4DMR solo está pensado para ejecutarse en **MareNostrum 5**. El despliegue anidado completo todavía no está documentado aquí; si necesitas ayuda escríbenos a [accelcom@bsc.es](mailto:accelcom@bsc.es).
