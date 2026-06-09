@@ -5,7 +5,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'DMR',
   tagline: 'Dynamic MPI Reconfiguration — scale your HPC application at runtime.',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo-browser.png',
 
   future: { v4: true },
   markdown: {

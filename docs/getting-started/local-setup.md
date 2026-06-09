@@ -134,5 +134,6 @@ minidmr stop
 ## Next steps
 
 - [Installation](installation): set up DMR on a real cluster
+- [Building and Running Your Application](building-and-running): compile and launch your app per mode
 - [Application Structure](../user-guide/app-structure): understand the full lifecycle
 - [Policies Overview](../user-guide/policies/overview): choose or implement a scaling policy

@@ -6,28 +6,43 @@ title: Installation
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-<Tabs groupId="system">
-  <TabItem value="mn5" label="MareNostrum 5">
+This page covers **building DMR from source**.
 
-## MareNostrum 5
-
-The easiest path: load the pre-built DMR module and you're done, no compilation needed.
+:::tip[On MareNostrum 5 you do not need this]
+A pre-built module already provides the library, headers, and all dependencies:
 
 ```bash
-module use /apps/GPP/DMR/dmr-modules
 module load dmr
 ```
 
-That single module provides the library, headers, and all dependencies (Open MPI, PRRTE, OpenPMIX). Use this for production runs.
+Use that for normal runs and skip this page; see [Building and Running Your Application](building-and-running). Follow the steps below only if you want to compile DMR from source (e.g. to modify it).
+:::
 
-If you need to **compile DMR yourself** on MN5 (e.g. to modify the source), see [MareNostrum 5 Manual Build](installation-mn5).
+DMR needs two things: its **dependencies** (a specific build of Open MPI with external OpenPMIX and PRRTE) and **DMR itself**. Once both are in place, compiling and launching your application is covered in [Building and Running Your Application](building-and-running).
+
+## 1. Get the dependencies
+
+<Tabs groupId="system">
+  <TabItem value="mn5" label="MareNostrum 5">
+
+Instead of building OpenPMIX, PRRTE, and Open MPI from scratch, load the pre-built MN5 modules:
+
+```bash
+module use /apps/GPP/DMR/dmr-modules
+module load openpmix-for-dmr
+module load prrte-for-dmr
+module load openmpi-for-dmr
+module load dlb-for-dmr   # optional, only for the CE policy
+```
+
+These set `OPENPMIX_PREFIX`, `PRRTE_PREFIX`, `OMPI_PREFIX`, and `DLB_PREFIX` automatically.
+
+:::note
+If you cannot use the pre-built modules, follow the **Other systems** tab using MN5-specific paths, adding the MN5 UCX path to the Open MPI `./configure` (`--with-ucx=/apps/GPP/UCX/1.16.0/GCC`).
+:::
 
   </TabItem>
   <TabItem value="other" label="Other systems">
-
-## Other systems
-
-### 1. Build the dependencies
 
 DMR requires a specific build of Open MPI with external OpenPMIX and PRRTE. Your system's default Open MPI is almost certainly incompatible.
 
@@ -99,13 +114,11 @@ LD_PRELOAD="$DLB_PREFIX/lib/libdlb_mpi.so"
 export DLB_ARGS="--talp --talp-external-profiler --quiet"
 ```
 
-### 2. Connect to Slurm
-
-CMake detects your Slurm automatically. If it fails:
+**Connect to Slurm.** CMake detects your Slurm automatically. If it fails:
 
 ```bash
 ldd $(which sbatch) | grep libslurm   # find the library path
-export SLURM_LIB=/usr/lib64/slurm    # set it
+export SLURM_LIB=/usr/lib64/slurm     # set it
 ```
 
 If Slurm headers are missing, clone the matching Slurm source:
@@ -122,34 +135,36 @@ Rename `slurm_version.h.in` → `slurm_version.h` and add before the final `#end
 #define SLURM_VERSION_NUMBER SLURM_VERSION_NUM(a,b,c)
 ```
 
-### 3. Build DMR
+  </TabItem>
+</Tabs>
+
+## 2. Build DMR
+
+With the dependencies in place, the build is the same on any system:
 
 ```bash
 git clone https://gitlab.bsc.es/accelcom/releases/dmr/dmr.git
 cd dmr
 cmake -B build -DCMAKE_INSTALL_PREFIX=/path/to/install
-cmake --build build
+cmake --build build -j$(nproc)
 cmake --install build
 ```
 
-See [Configuration](../user-guide/configuration) for the full list of CMake options.
-
-  </TabItem>
-</Tabs>
-
-## Linking your application
-
-```c
-#include "dmr.h"
-```
+Set additional options as needed:
 
 ```bash
-mpicc -o my_app my_app.c -ldmr
+cmake -B build \
+  -DCMAKE_INSTALL_PREFIX=/path/to/install \
+  -DDMR_PROCS_PER_NODE=112 \
+  -DDMR_USE_TALP=1
 ```
 
-With CMake:
+On MN5, use `-j112` to match the cores per node. See [Configuration](../user-guide/configuration) for the full list of CMake options.
 
-```cmake
-find_package(DMR REQUIRED)
-target_link_libraries(my_app PRIVATE DMR::dmr)
-```
+:::info[Not yet documented]
+Building Slurm4DMR with a custom Slurm on MareNostrum 5 is not yet covered here. For help, contact us at [accelcom@bsc.es](mailto:accelcom@bsc.es).
+:::
+
+## Next step
+
+With DMR installed, see [Building and Running Your Application](building-and-running) to compile your code against DMR and launch it.

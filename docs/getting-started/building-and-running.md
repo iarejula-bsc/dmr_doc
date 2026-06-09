@@ -1,0 +1,100 @@
+---
+sidebar_position: 4
+title: Building and Running Your Application
+---
+
+Once DMR is available on your system, you compile your application against it and launch it through the DMR wrapper. **How you compile and launch depends on the [mode of operation](modes-of-operation)** you target.
+
+## Prerequisite: DMR installed
+
+- **MareNostrum 5:** `module load dmr` provides the library, headers, and all dependencies.
+- **Other systems:** build DMR from source, see [Installation](installation).
+
+Either way you end up with DMR's `include` and `lib` directories available (referred to below as `$DMR_PATH`).
+
+## Compiling your application
+
+Include the header and link against `libdmr`:
+
+```c
+#include "dmr.h"
+```
+
+```bash
+mpicc -o my_app my_app.c -I$DMR_PATH/include -L$DMR_PATH/lib -ldmr
+```
+
+If the DMR module (or your environment) already exposes the include and library paths, `-ldmr` alone is enough:
+
+```bash
+mpicc -o my_app my_app.c -ldmr
+```
+
+With CMake:
+
+```cmake
+find_package(DMR REQUIRED)
+target_link_libraries(my_app PRIVATE DMR::dmr)
+```
+
+### Selecting the mode at compile time
+
+The **same source code** builds for either mode; a compile flag selects which resource-manager backend the binary targets:
+
+| Mode | Compile flag |
+| --- | --- |
+| DMR@Jobs (default) | none |
+| Slurm4DMR | `-DUSE_SLURM4DMR` |
+
+```bash
+# DMR@Jobs
+mpicc -o my_app my_app.c -ldmr
+
+# Slurm4DMR
+mpicc -o my_app my_app.c -ldmr -DUSE_SLURM4DMR
+```
+
+## Running your application
+
+DMR must run inside a **Slurm job allocation**, launched through the `dmr` wrapper (which wraps `mpirun`). The way you do this differs by mode.
+
+### DMR@Jobs
+
+Submit a normal batch job that invokes the wrapper. DMR requests node additions or removals from the system's Slurm as the application reconfigures.
+
+```bash
+#!/bin/bash
+#SBATCH --time=00:10:00
+#SBATCH --exclusive
+#SBATCH -N 1
+
+export DMR_PROCS_PER_NODE=1
+
+NODELIST_WITH_COUNTS=$(scontrol show hostnames "$SLURM_JOB_NODELIST" \
+  | awk -v n="$DMR_PROCS_PER_NODE" '{print $1 ":" n}' \
+  | paste -sd,)
+
+dmr mpirun --host $NODELIST_WITH_COUNTS ./my_app
+```
+
+```bash
+sbatch submit.sh
+```
+
+### Slurm4DMR
+
+Slurm4DMR runs a **nested Slurm instance** inside a fixed allocation, which reassigns nodes internally as the application reconfigures. Compile with `-DUSE_SLURM4DMR`, then use a launch script that deploys the nested Slurm and submits your job to it (the wrapper invocation is the same `dmr mpirun` pattern, but it runs against the inner Slurm).
+
+:::note
+Slurm4DMR is currently only intended to run on **MareNostrum 5**. The full nested-deployment setup is not yet documented here; for help contact us at [accelcom@bsc.es](mailto:accelcom@bsc.es).
+:::
+
+### Locally with MiniDMR
+
+To try DMR on your own machine without HPC access, use MiniDMR, which spins up a Docker-based Slurm cluster. See [Local Quick Setup](local-setup).
+
+## Next steps
+
+- [Modes of Operation](modes-of-operation): when to use DMR@Jobs vs Slurm4DMR.
+- [Application Structure](../user-guide/app-structure): the full lifecycle and `DMR_AUTO`.
+- [Configuration](../user-guide/configuration): runtime and build options.
