@@ -70,7 +70,7 @@ For manual installation, download the binary from the [Releases page](https://gi
 
 ```bash
 # Start a 4-node cluster
-minidmr start --nodes 4 --project demo
+minidmr start --nodes 4
 
 # Enter the controller node
 minidmr enter
@@ -82,7 +82,7 @@ minidmr stop
 ## Running DMR tests
 
 ```bash
-minidmr start --nodes 4 --project dmr-tests
+minidmr start --nodes 4
 minidmr enter
 ```
 

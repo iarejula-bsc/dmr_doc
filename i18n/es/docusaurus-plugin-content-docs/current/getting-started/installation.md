@@ -146,7 +146,7 @@ Con las dependencias listas, la compilación es la misma en cualquier sistema:
 git clone https://gitlab.bsc.es/accelcom/releases/dmr/dmr.git
 cd dmr
 cmake -B build -DCMAKE_INSTALL_PREFIX=/path/to/install
-cmake --build build -j$(nproc)
+cmake --build build -j10
 cmake --install build
 ```
 
@@ -159,7 +159,7 @@ cmake -B build \
   -DDMR_USE_TALP=1
 ```
 
-En MN5, usa `-j112` para ajustarte a los núcleos por nodo. Consulta [Configuración](../user-guide/configuration) para ver la lista completa de opciones de CMake.
+Ajusta `-j10` al número de trabajos de compilación que quieras. Esto genera una compilación de DMR@Jobs; para apuntar a Slurm4DMR, añade `-DSLURM4DMR=1` (y `SLURM4DMR_ROOT`). Consulta [Configuración](../user-guide/configuration) para ver la lista completa de opciones de CMake.
 
 :::info[Pendiente de documentar]
 La compilación de Slurm4DMR con un Slurm personalizado en MareNostrum 5 todavía no se cubre aquí. Si necesitas ayuda, escríbenos a [accelcom@bsc.es](mailto:accelcom@bsc.es).

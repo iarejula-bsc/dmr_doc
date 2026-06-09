@@ -37,22 +37,16 @@ find_package(DMR REQUIRED)
 target_link_libraries(my_app PRIVATE DMR::dmr)
 ```
 
-### Selecting the mode at compile time
+### The mode is fixed when DMR is built
 
-The **same source code** builds for either mode; a compile flag selects which resource-manager backend the binary targets:
+The mode is **baked into the DMR library at build time**, not chosen when you compile your application. A given DMR build targets one backend:
 
-| Mode | Compile flag |
+| Mode | How DMR was built |
 | --- | --- |
-| DMR@Jobs (default) | none |
-| Slurm4DMR | `-DUSE_SLURM4DMR` |
+| DMR@Jobs (default) | standard build |
+| Slurm4DMR | built with the `SLURM4DMR` CMake option |
 
-```bash
-# DMR@Jobs
-mpicc -o my_app my_app.c -ldmr
-
-# Slurm4DMR
-mpicc -o my_app my_app.c -ldmr -DUSE_SLURM4DMR
-```
+Your application links against `libdmr` the same way in both cases, and runs in whichever mode the DMR it links against was built for. So there is no app-side flag: to use Slurm4DMR, link against (or `module load`) a DMR that was compiled with `SLURM4DMR`. See [Installation](installation) and the [`SLURM4DMR` CMake option](../user-guide/configuration#cmake-options).
 
 ## Running your application
 

@@ -18,6 +18,7 @@ cmake -B build \
 | Option | Default | Description |
 |--------|---------|-------------|
 | `CMAKE_INSTALL_PREFIX` | system default | Installation directory for headers and `libdmr` |
+| `SLURM4DMR` | `0` | Build for the Slurm4DMR backend (nested Slurm) instead of DMR@Jobs. Requires `SLURM4DMR_ROOT` (or `SLURM4DMR_LIB_DIR`/`SLURM4DMR_BIN_DIR`/`SLURM4DMR_INCLUDE_DIR`) |
 | `DMR_PROCS_PER_NODE` | `1` | Processes spawned per node added in an expand |
 | `DMR_USE_TALP` | `0` | Compile with DLB/TALP (enables CE policies) |
 | `DMR_CHECKPOINT_RESTART` | `1` | Use checkpoint-restart for reconfigurations. Set to `0` to use the intercommunicator (`DMR_INTERCOMM`) instead |

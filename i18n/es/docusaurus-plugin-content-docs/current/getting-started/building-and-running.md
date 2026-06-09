@@ -37,22 +37,16 @@ find_package(DMR REQUIRED)
 target_link_libraries(my_app PRIVATE DMR::dmr)
 ```
 
-### Seleccionar el modo en tiempo de compilación
+### El modo se fija al compilar DMR
 
-El **mismo código fuente** se compila para cualquiera de los dos modos; un flag de compilación selecciona qué backend de gestor de recursos usa el binario:
+El modo queda **integrado en la biblioteca DMR en tiempo de compilación**, no se elige al compilar tu aplicación. Una compilación concreta de DMR apunta a un único backend:
 
-| Modo | Flag de compilación |
+| Modo | Cómo se compiló DMR |
 | --- | --- |
-| DMR@Jobs (por defecto) | ninguno |
-| Slurm4DMR | `-DUSE_SLURM4DMR` |
+| DMR@Jobs (por defecto) | compilación estándar |
+| Slurm4DMR | compilado con la opción de CMake `SLURM4DMR` |
 
-```bash
-# DMR@Jobs
-mpicc -o my_app my_app.c -ldmr
-
-# Slurm4DMR
-mpicc -o my_app my_app.c -ldmr -DUSE_SLURM4DMR
-```
+Tu aplicación enlaza con `libdmr` igual en ambos casos, y se ejecuta en el modo con el que se compiló el DMR contra el que enlaza. Por tanto no hay ningún flag en la app: para usar Slurm4DMR, enlaza (o haz `module load`) de un DMR compilado con `SLURM4DMR`. Consulta [Instalación](installation) y la [opción de CMake `SLURM4DMR`](../user-guide/configuration#opciones-de-cmake).
 
 ## Ejecutar tu aplicación
 

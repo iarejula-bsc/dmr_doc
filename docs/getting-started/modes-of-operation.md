@@ -9,8 +9,6 @@ DMR offers two modes of operation, which differ in how they interact with the re
 
 DMR@Jobs connects to your **system's default Slurm instance**. Your application runs as a regular Slurm job and DMR requests node additions or removals through the standard Slurm API.
 
-**When to use it:** the default for most clusters. Expansion works by submitting a standard Slurm job with an `expand:` dependency, which is a built-in Slurm mechanism that requires no special administrator configuration. Shrinking (`DMR_JOBS_CAN_SHRINK`) requires Slurm support for removing nodes from a running job, which may need to be enabled by the administrator.
-
 ## Slurm4DMR
 
 Slurm4DMR runs a **nested Slurm instance** inside a fixed resource allocation managed by the outer resource manager. Your job owns a fixed set of nodes, and Slurm4DMR reassigns them internally as the application expands or shrinks.

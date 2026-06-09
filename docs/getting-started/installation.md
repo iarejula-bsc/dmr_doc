@@ -146,7 +146,7 @@ With the dependencies in place, the build is the same on any system:
 git clone https://gitlab.bsc.es/accelcom/releases/dmr/dmr.git
 cd dmr
 cmake -B build -DCMAKE_INSTALL_PREFIX=/path/to/install
-cmake --build build -j$(nproc)
+cmake --build build -j10
 cmake --install build
 ```
 
@@ -159,7 +159,7 @@ cmake -B build \
   -DDMR_USE_TALP=1
 ```
 
-On MN5, use `-j112` to match the cores per node. See [Configuration](../user-guide/configuration) for the full list of CMake options.
+Adjust `-j10` to the number of build jobs you want. This produces a DMR@Jobs build; to target Slurm4DMR instead, add `-DSLURM4DMR=1` (and `SLURM4DMR_ROOT`). See [Configuration](../user-guide/configuration) for the full list of CMake options.
 
 :::info[Not yet documented]
 Building Slurm4DMR with a custom Slurm on MareNostrum 5 is not yet covered here. For help, contact us at [accelcom@bsc.es](mailto:accelcom@bsc.es).
