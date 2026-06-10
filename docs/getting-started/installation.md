@@ -140,12 +140,55 @@ Rename `slurm_version.h.in` → `slurm_version.h` and add before the final `#end
 
 ## 2. Build DMR
 
-With the dependencies in place, the build is the same on any system:
+With the dependencies in place, the build is the same on any system, you just need to chose which flavour you want: controlled (Slurm4DMR) or production (DMR@jobs) environment ([see](../getting-started/concepts)).
 
 ```bash
 git clone https://gitlab.bsc.es/accelcom/releases/dmr/dmr.git
 cd dmr
-cmake -B build -DCMAKE_INSTALL_PREFIX=/path/to/install
+```
+
+Download also examples and tools with (mandatory for Slurm4DMR but reccomended for the *examples*):
+```bash
+git submodule update --init --recursive
+```
+
+Assuming that:
+
+```bash
+DMR_SOURCES_PATH=$HOME/dmr
+DMR_INSTALL_PATH=$HOME/dmr-install
+```
+
+### Slurm4DMR
+
+First of all, you need the custom Slurm that will run nested to the main Slurm job:
+
+```bash
+export SLURM_ROOT="$PWD/slurm-install" # Edit to your liking
+cd $DMR_SOURCES_PATH/tools/slurm4dmr
+cd custom-slurm
+./configure --prefix=$SLURM_ROOT --sysconfdir=$SLURM_ROOT/slurm-confdir --without-pmix --with-ssl=$OPENSSL_PATH
+make CFLAGS='-fcommon' CXXFLAGS='-fcommon' -j10
+make install
+```
+
+Then, DMR:
+
+```bash
+cd $DMR_SOURCES
+cmake -B build \
+  -DCMAKE_INSTALL_PREFIX=$DMR_INSTALL_PATH \
+  -DSLURM4DMR=1 \
+cmake --build build -j72
+cmake --install build
+```
+
+### DMR@jobs
+
+From where DMR was cloned:
+
+```bash
+cmake -B build -DCMAKE_INSTALL_PREFIX=$DMR_INSTALL_PATH 
 cmake --build build -j10
 cmake --install build
 ```
@@ -154,15 +197,15 @@ Set additional options as needed:
 
 ```bash
 cmake -B build \
-  -DCMAKE_INSTALL_PREFIX=/path/to/install \
+  -DCMAKE_INSTALL_PREFIX=$DMR_INSTALL_PATH \
   -DDMR_PROCS_PER_NODE=112 \
   -DDMR_USE_TALP=1
 ```
 
-Adjust `-j10` to the number of build jobs you want. This produces a DMR@Jobs build; to target Slurm4DMR instead, add `-DSLURM4DMR=1` (and `SLURM4DMR_ROOT`). See [Configuration](../user-guide/configuration) for the full list of CMake options.
+Adjust `-j10` to the number of build jobs you want. See [Configuration](../user-guide/configuration) for the full list of CMake options.
 
 :::info[Not yet documented]
-Building Slurm4DMR with a custom Slurm on MareNostrum 5 is not yet covered here. For help, contact us at [accelcom@bsc.es](mailto:accelcom@bsc.es).
+For help, contact us at [accelcom@bsc.es](mailto:accelcom@bsc.es).
 :::
 
 ## Next step
