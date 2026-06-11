@@ -9,13 +9,13 @@ import TabItem from '@theme/TabItem';
 This page covers **building DMR from source**.
 
 :::tip[On MareNostrum 5 you do not need this]
-A pre-built module already provides the library, headers, and all dependencies:
+A pre-built module already provides the library, headers, and all dependencies for DMR@jobs:
 
 ```bash
 module load dmr
 ```
 
-Use that for normal runs and skip this page; see [Building and Running Your Application](building-and-running). Follow the steps below only if you want to compile DMR from source (e.g. to modify it).
+Use that for **production runs** and skip this page; see [Building and Running Your Application](building-and-running). Follow the steps below only if you want to compile DMR from source (e.g., Slurm4DMR, develop new features...).
 :::
 
 DMR needs two things: its **dependencies** (a specific build of Open MPI with external OpenPMIX and PRRTE) and **DMR itself**. Once both are in place, compiling and launching your application is covered in [Building and Running Your Application](building-and-running).
