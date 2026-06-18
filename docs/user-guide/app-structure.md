@@ -155,6 +155,15 @@ DMR supports two redistribution strategies, selected at compile time:
 
 See [Data Redistribution](data-redistribution) for a detailed explanation of the `DMR_CHECKPOINT_RESTART=0` workflow.
 
+## Who owns `MPI_Init` and `MPI_Finalize`
+
+The skeletons above have the application call `MPI_Init` and `MPI_Finalize` directly. In real codes another library (e.g. a simulator or solver) often initializes and finalizes MPI itself. Two rules keep this working with DMR:
+
+- **`MPI_Init` must run before `dmr_init`.** DMR uses MPI from `dmr_init` onward (`dmr_init` calls `MPI_Comm_get_parent` to detect a spawned process). Whoever owns MPI must initialize it first. If a library initializes MPI, call its init *before* `dmr_init`; do not call `MPI_Init` twice.
+- **On a reconfiguration, DMR finalizes MPI for you on the leaving ranks.** When `dmr_finalize()` runs as part of a reconfiguration it calls `MPI_Finalize()` and then `exit()` — the executable is being torn down so a fresh world can take over. Your post-loop `MPI_Finalize()` is reached **only** on a normal, non-reconfiguring exit.
+
+The practical hazard is a **double `MPI_Finalize`**: if a library's teardown calls `MPI_Finalize` and you run that teardown in `finalize_func` (or after the loop) on a leaving rank, it collides with the `MPI_Finalize` inside `dmr_finalize()`. On leaving ranks, release the library's MPI-bound state without finalizing MPI, and let `dmr_finalize()` own the actual `MPI_Finalize`. See the warning in [Reconfiguration Handling](reconfiguration-handling#finalize_func-clean-up-resources).
+
 ## Thread safety
 
 DMR is **not thread-safe**. Do not call any DMR function from multiple threads concurrently.

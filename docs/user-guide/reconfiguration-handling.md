@@ -30,6 +30,16 @@ DMR_AUTO(the_action, redist_func, restart_func, finalize_func)
 | `DMR_CLEANUP` | Calls `finalize_func` |
 | `DMR_ERROR` | Does nothing |
 
+## Which callback fires on which side
+
+A reconfiguration produces two groups of processes, and `DMR_AUTO` runs a different callback on each. This mapping is the practical consequence of the dispatch table above; keep it in mind when deciding where to put your save/restore code.
+
+| Process group | Action it sees | `DMR_AUTO` runs | Then |
+|---------------|---------------|-----------------|------|
+| **Leaving** ranks (the old world) | `dmr_reconfigure()` returns `DMR_REDIST_FINALIZE` | `redist_func` → `finalize_func` | `dmr_finalize()` — the rank **exits** |
+| **Spawned** ranks (the new world) | `dmr_init()` returns `DMR_RESTART_RECONF` | `restart_func` | `dmr_reconfigure()` — then continues into the loop |
+
+There is no third "surviving" group: the spawn creates an entirely new `MPI_COMM_WORLD` and every leaving rank exits. So `redist_func` is always your **send/save** side and `restart_func` is always your **receive/load** side. In intercommunicator mode (`DMR_CHECKPOINT_RESTART=0`) this ordering is also what keeps `DMR_INTERCOMM` valid in each callback — see [Data Redistribution](data-redistribution).
 
 ## Usage examples
 
@@ -87,6 +97,12 @@ void cleanup(void)
     free(my_data);
 }
 ```
+
+:::warning Do not call `MPI_Finalize` (or anything that does) in `finalize_func`
+On a leaving rank, `DMR_AUTO` calls `dmr_finalize()` right after `finalize_func`, and `dmr_finalize()` itself calls `MPI_Finalize()` and then `exit()` — your post-loop `MPI_Finalize()` is never reached on that rank. If `finalize_func` also finalizes MPI, you get a double `MPI_Finalize`, which is undefined behaviour and typically aborts the in-progress reconfiguration.
+
+This matters most when a library (e.g. a simulator) owns MPI: its teardown routine may call `MPI_Finalize` internally. On leaving ranks, free the library's MPI-bound state in `finalize_func` *only* in a way that does not finalize MPI, and let `dmr_finalize()` finalize MPI for you. See [Application Structure](app-structure#who-owns-mpi_init-and-mpi_finalize) for who should own `MPI_Init`/`MPI_Finalize`.
+:::
 
 ## Without the macro
 
