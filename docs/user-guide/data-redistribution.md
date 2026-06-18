@@ -13,16 +13,16 @@ DMR supports two ways to do this, selected at compile time with `DMR_CHECKPOINT_
 
 Old processes write their state to disk (`redist_func`), then exit. New processes start from the beginning of the executable and read that state back (`restart_func`).
 
-```
-old processes          new processes
-      │                      │
-  redist_func()              │  ← save state to disk
-      │                      │
-    exit                     │
-                         main() starts
-                         restart_func() ← load state from disk
-                             │
-                         continue...
+```mermaid
+sequenceDiagram
+    participant Old as Old processes
+    participant Disk
+    participant New as New processes
+    Old->>Disk: redist_func() — save state
+    Note over Old: exit
+    Note over New: main() starts
+    Disk->>New: restart_func() — load state
+    Note over New: continue...
 ```
 
 Use this mode when you already have checkpoint logic in your application, or when your system does not support the custom PRRTE version required for intercommunicator mode.
@@ -33,14 +33,19 @@ Use this mode when you already have checkpoint logic in your application, or whe
 
 Old and new processes are **alive at the same time** for a short window. DMR exposes `DMR_INTERCOMM`, an MPI intercommunicator connecting both sets of processes so they can exchange data directly. Once the transfer is done, the old processes exit. New processes also start from the beginning of the executable.
 
-```
-old processes          new processes
-      │                      │
-  redist_func()          main() starts  ← both alive simultaneously
-  send via INTERCOMM     restart_func()
-      │                  recv via INTERCOMM
-    exit                     │
-                         continue...
+```mermaid
+sequenceDiagram
+    participant Old as Old processes
+    participant New as New processes
+    Note over New: main() starts
+    par Both alive simultaneously
+        Note over Old: redist_func()
+    and
+        Note over New: restart_func()
+    end
+    Old->>New: send / recv via DMR_INTERCOMM
+    Note over Old: exit
+    Note over New: continue...
 ```
 
 Use `dmr_intercomm_available()` to check whether `DMR_INTERCOMM` is currently valid before using it.
