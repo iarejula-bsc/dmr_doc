@@ -45,11 +45,11 @@ old processes          new processes
 
 Use `dmr_intercomm_available()` to check whether `DMR_INTERCOMM` is currently valid before using it.
 
-## The whole world is replaced — there are no surviving ranks
+:::note[The whole world is replaced, no surviving ranks]
+A reconfiguration is an **MPI spawn of a brand-new world** (`MPI_Comm_spawn_multiple`) plus a relaunch of the executable from `main()`; every process of the old world then exits. This holds on both a shrink and an expand, so **no rank keeps data across the boundary** — every new process must obtain everything it needs over `DMR_INTERCOMM`. There is no "surviving rank that already holds part of the array."
+:::
 
-This is the model fact that everything below depends on. A reconfiguration is an **MPI spawn of a brand-new world plus a relaunch of the executable from `main()`**. DMR calls `MPI_Comm_spawn_multiple` to create an *entirely new* `MPI_COMM_WORLD` and every process of the old world then exits.
-
-This is true on both a shrink and an expand. No process is carried over, so **no rank keeps data across the boundary** — every process in the new world must obtain everything it needs either from disk (checkpoint-restart) or over `DMR_INTERCOMM` (intercommunicator mode). There is no "surviving rank that already holds part of the array."
+### The two worlds and `DMR_INTERCOMM`
 
 `DMR_INTERCOMM` connects the two worlds as the local/remote groups of one MPI intercommunicator:
 
@@ -60,7 +60,7 @@ This is true on both a shrink and an expand. No process is carried over, so **no
 
 So `MPI_Comm_size(MPI_COMM_WORLD, ...)` gives your own world's size, and `MPI_Comm_remote_size(DMR_INTERCOMM, ...)` gives the *other* world's size. Remote ranks are numbered `0 .. remote_size-1`, and you send to / receive from them by that rank number over `DMR_INTERCOMM` (it is a normal MPI intercommunicator).
 
-## When is `DMR_INTERCOMM` valid?
+### When is `DMR_INTERCOMM` valid?
 
 The intercommunicator only exists during the reconfigure window, and the window is different on each side. Each side must do its transfer inside the matching `DMR_AUTO` callback:
 
@@ -71,7 +71,7 @@ The intercommunicator only exists during the reconfigure window, and the window 
 
 `DMR_AUTO` already sequences these correctly: on the leaving side it calls `dmr_reconfigure()` (which spawns the new world and creates the intercomm) *before* `redist_func`; on the spawned side it calls `restart_func` *before* `dmr_reconfigure()` (which frees the intercomm). The intercommunicator is **not** valid after `dmr_check`/`dmr_init` return in the steady state — `dmr_intercomm_available()` returns 0 there.
 
-## Worked example: redistributing a block-distributed array
+### Worked example: redistributing a block-distributed array
 
 The array is split into contiguous blocks, one per rank. After a reconfiguration the number of ranks changes, so the block boundaries move and data must be re-sent. The same code handles both shrink (many → few) and expand (few → many): each old rank sends the slices that overlap each new rank's block, and each new rank receives the slices that overlap its block from each old rank.
 
@@ -96,7 +96,7 @@ static inline int imax(int a, int b) { return a > b ? a : b; }
 static inline int imin(int a, int b) { return a < b ? a : b; }
 ```
 
-### Sending side — `redist_func` on the leaving ranks
+#### Sending side — `redist_func` on the leaving ranks
 
 ```c
 /* Called on every old rank once dmr_reconfigure() has created the intercomm. */
@@ -126,7 +126,7 @@ static void send_state(void)
 }
 ```
 
-### Receiving side — `restart_func` on the spawned ranks
+#### Receiving side — `restart_func` on the spawned ranks
 
 ```c
 /* Called on every new rank before it calls dmr_reconfigure(). */
@@ -155,7 +155,7 @@ static void recv_state(void)
 }
 ```
 
-### Wiring it into the main loop
+#### Wiring it into the main loop
 
 ```c
 int main(int argc, char *argv[])
@@ -190,11 +190,11 @@ int main(int argc, char *argv[])
 }
 ```
 
-:::note Expand vs shrink
+:::note[Expand vs shrink]
 The send/receive loops above are symmetric and need no special-casing: on a **shrink** (`old_size > new_size`) each new rank's block is larger, so it receives slices from several old ranks (a gather); on an **expand** (`old_size < new_size`) each old rank's block is larger, so it sends slices to several new ranks (a scatter). Because the whole world is replaced, every new rank rebuilds its block entirely from the intercomm — nothing is reused in place.
 :::
 
-## Carrying the resume point without a disk checkpoint
+### Carrying the resume point without a disk checkpoint
 
 In checkpoint-restart mode the loop index is usually restored from the same file as the data (see [Application Structure](app-structure)). In intercommunicator mode there is no file, so send the resume index over `DMR_INTERCOMM` alongside the array — e.g. have old rank 0 `MPI_Send` it to new rank 0 in `send_state`, and have new rank 0 `MPI_Recv` it in `recv_state` and broadcast it over the new `MPI_COMM_WORLD`.
 
