@@ -19,7 +19,7 @@ sequenceDiagram
     participant Disk
     participant New as New processes
     Old->>Disk: redist_func() — save state
-    Note over Old: exit
+    destroy Old
     Note over New: main() starts
     Disk->>New: restart_func() — load state
     Note over New: continue...
@@ -40,11 +40,11 @@ sequenceDiagram
     Note over New: main() starts
     par Both alive simultaneously
         Note over Old: redist_func()
+        Old->>New: send / recv via DMR_INTERCOMM
     and
         Note over New: restart_func()
     end
-    Old->>New: send / recv via DMR_INTERCOMM
-    Note over Old: exit
+    destroy Old
     Note over New: continue...
 ```
 
